@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>SLiPP Java Web Programming</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"
+	rel="stylesheet">
+<!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+<link href="/webjars/bootstrap/3.3.7-1/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">SLiPP</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse"
+                id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/form.html">회원가입</a></li>
+                    <li><a href="/list">사용자 목록</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    
+	<div class="navbar navbar-default" id="subnav">
+		<div class="col-md-12">
+			<div class="navbar-header">
+				<a href="#" style="margin-left: 15px;"
+					class="navbar-btn btn btn-default btn-plus dropdown-toggle"
+					data-toggle="dropdown"><i class="glyphicon glyphicon-home"
+					style="color: #dd1111;"></i> Home <small><i
+						class="glyphicon glyphicon-chevron-down"></i></small></a>
+				<ul class="nav dropdown-menu">
+					<li><a href="../user/profile.html"><i
+							class="glyphicon glyphicon-user" style="color: #1111dd;"></i>
+							Profile</a></li>
+					<li class="nav-divider"></li>
+					<li><a href="#"><i class="glyphicon glyphicon-cog"
+							style="color: #dd1111;"></i> Settings</a></li>
+				</ul>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse2">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active"><a href="../index.html">Posts</a></li>
+					<li><a href="../user/login.html" role="button">로그인</a></li>
+					<li><a href="../user/form.html" role="button">회원가입</a></li>
+					<li><a href="#" role="button">로그아웃</a></li>
+					<li><a href="#" role="button">개인정보수정</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="container" id="main">
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>사용자 아이디</th>
+							<th>이름</th>
+							<th>이메일</th>
+						</tr>
+					</thead>
+					<tbody>
+                        {{#users}}
+                        <tr>
+							<th scope="row">{{userId}}</th>
+							<td>{{name}}</td>
+							<td>{{email}}</td>
+						</tr>
+                        {{/users}}
+
+                    </tbody>
+				</table>
+	</div>
+
+	<!-- script references -->
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="/webjars/jquery/3.1.0/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+</body>
+</html>
