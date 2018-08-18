@@ -5,7 +5,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-    {{name}},  Hello Wrold!<br>
-    {{age}}살.
+	Hello {{name}}
+	You have just won {{value}} dollars!
+	{{#in_ca}}
+	Well, {{taxed_value}} dollars, after taxes.
+	{{/in_ca}}    
 </body>
 </html>
