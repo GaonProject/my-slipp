@@ -25,6 +25,7 @@ public class UserController {
 	
 	@GetMapping("/form")
 	public String form() {
+		System.out.println("회원가입");
 		return "/user/form";
 	}
 	
