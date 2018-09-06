@@ -8,5 +8,6 @@ public class HomeController {
 	@GetMapping("")
 	public String home() {
 		return "index";
+		//return new ModelAndView("index");
 	}
 }

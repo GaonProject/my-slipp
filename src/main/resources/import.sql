@@ -1,0 +1,1 @@
+INSERT INTO USER (id, user_id, password, name, email) VALUES (999, 'gaonit', 'test', '가온', 'gaon@gaonit.co.kr');

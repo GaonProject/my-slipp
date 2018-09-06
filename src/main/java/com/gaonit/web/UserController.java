@@ -3,6 +3,8 @@ package com.gaonit.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +25,39 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@GetMapping("/loginForm")
+	public String loginForm() {
+		return "/user/login";
+	}
+	
+	@PostMapping("/login")
+	public String login(String userId, String password, HttpSession session) {
+		User user = userRepository.findByUserId(userId);
+		
+		if (user == null) {
+			return "redirect:/users/loginForm";
+		}
+		if (!password.equals(user.getPassword())) {
+			return "redirect:/users/loginForm";
+		}
+		
+		session.setAttribute("user", user);
+		System.out.println(user);
+		return "redirect:/";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("user");
+		
+		return "redirect:/";
+	}
+	
 	@GetMapping("/form")
 	public String form() {
 		System.out.println("회원가입");
 		return "/user/form";
+		//return new ModelAndView("/user/form");
 	}
 	
 	@PostMapping("")
@@ -45,7 +76,8 @@ public class UserController {
 	
 	@GetMapping("/{id}/form")
 	public String updateForm(@PathVariable Long id, Model model) {
-		System.out.println(id);
+		
+		System.out.println("수정: " + id);
 		//Optional<User> user = userRepository.findById(id);
 		User user = userRepository.getOne(id); 
 		System.out.println(user);
