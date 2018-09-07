@@ -37,18 +37,19 @@ public class UserController {
 		if (user == null) {
 			return "redirect:/users/loginForm";
 		}
-		if (!password.equals(user.getPassword())) {
+		
+		if (!user.matchPassword(password)) {
 			return "redirect:/users/loginForm";
 		}
 		
-		session.setAttribute("user", user);
+		session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, user);
 		System.out.println(user);
 		return "redirect:/";
 	}
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("user");
+		session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
 		
 		return "redirect:/";
 	}
@@ -75,11 +76,24 @@ public class UserController {
 	}
 	
 	@GetMapping("/{id}/form")
-	public String updateForm(@PathVariable Long id, Model model) {
+	public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
+		System.out.println("시작: " + id);
 		
+		if (!HttpSessionUtils.isLoginUser(session)) {
+			return "redirect:/users/loginForm";
+		}
+		
+		User sessionedUser = HttpSessionUtils.getUserFormSession(session);
+		
+		System.out.println("이름: " + sessionedUser.getName());
+		if (!id.equals(sessionedUser.getId())) {
+			throw new IllegalStateException("자신의 정보만 수정할 수 있습니다.");
+		}
+		
+		 
 		System.out.println("수정: " + id);
 		//Optional<User> user = userRepository.findById(id);
-		User user = userRepository.getOne(id); 
+		User user = userRepository.getOne(sessionedUser.getId()); 
 		System.out.println(user);
 		
 		model.addAttribute("user", user);
@@ -87,10 +101,20 @@ public class UserController {
 	}
 	
 	@PutMapping("/{id}")
-	public String update(@PathVariable Long id, User newUser) {
+	public String update(@PathVariable Long id, User updatedUser, HttpSession session) {
+		if (!HttpSessionUtils.isLoginUser(session)) {
+			return "redirect:/users/loginForm";
+		}
+		
+		User sessionedUser = HttpSessionUtils.getUserFormSession(session);
+		
+		if (!sessionedUser.matchId(id)) {
+			throw new IllegalStateException("자신의 정보만 수정할 수 있습니다.");
+		}		
+		
 		User user = userRepository.getOne(id);
 		
-		user.update(newUser);
+		user.update(updatedUser);
 		
 		userRepository.save(user);
 		

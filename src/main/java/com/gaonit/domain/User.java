@@ -3,15 +3,16 @@ package com.gaonit.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class User {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable=false, length=20)
+	@Column(nullable=false, length=20, unique=true)
 	private String userId;
 	private String password;
 	private String name;
@@ -63,5 +64,19 @@ public class User {
 	}
 	
 	
+	public boolean matchPassword(String newPassword) {
+		if (newPassword == null) {
+			return false;
+		}
+		
+		return newPassword.equals(password);
+		
+	}
 	
+	public boolean matchId(Long newId) {
+		if (newId == null)
+			return false;
+		
+		return newId.equals(id);
+	}
 }
